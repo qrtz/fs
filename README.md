@@ -36,7 +36,7 @@ Usage
 package main
 
 import (
-	"github.com/qrtz/fileserver"
+	"github.com/qrtz/fs"
 	"html/template"
 	"net/http"
 )
