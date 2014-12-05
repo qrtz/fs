@@ -30,9 +30,6 @@ func (f *FileServer) StripPrefix(prefix string)
 func New(root string, options ...func(*FileServer)) http.Handler 
 ```
 
-Usage
-=====
-``` go
 package main
 
 import (
@@ -41,12 +38,11 @@ import (
 	"net/http"
 )
 
-// Server files in the current directory
 func main() {
-	notfound := template.Must(template.New("404").Parse(`<!DOCTYPE html><html><body><h1>[404]</h1></body></html>`))
+	notfound := template.Must(template.New("404").Parse(`<!DOCTYPE html><html><head><title>[404]</title></head><body><h1>[404]</h1></body></html>`))
 
-	http.ListenAndServe(":8080", fileserver.New(".", func(fs *fileserver.Server) {
-		fs.ErrorHandler(0, func(w http.ResponseWriter, r *http.Request, code int) {
+	http.ListenAndServe(":8080", fs.New(".", func(f *fs.FileServer) {
+		f.ErrorHandler(0, func(w http.ResponseWriter, r *http.Request, code int) {
 			w.Header().Set("Content-Type", "text/html; charset=utf-8")
 			w.WriteHeader(code)
 			notfound.Execute(w, nil)
