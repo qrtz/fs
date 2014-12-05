@@ -33,6 +33,7 @@ func New(root string, options ...func(*FileServer)) http.Handler
 Usage
 =====
 ``` go
+// Server files in the current directory
 package main
 
 import (
