@@ -19,7 +19,7 @@ func (f *FileServer) Index(index ...string)
 ```
 ``` go
 // Set a handler that remove the prefix from
-// the request URL before attempting to server request
+// the request URL before attempting to serve the request
 func (f *FileServer) StripPrefix(prefix string)
 ```
 
