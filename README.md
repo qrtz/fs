@@ -3,6 +3,13 @@ fs
 
 Package fs is a simple wrapper for net/http.FileServer. Provides helper functions to configure the behavior of the server
 
+Features
+========
+* Set Custom Error Handlers
+* Set Custom Index pages
+* Enable or disable directory listing. Default disabled
+
+
 ``` go
 // Set http error handler
 // handler with code=0 is used as default handler
