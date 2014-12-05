@@ -39,15 +39,13 @@ import (
 	"github.com/qrtz/fileserver"
 	"html/template"
 	"net/http"
-	"os"
-	"path/filepath"
 )
 
-// Server file in the current working directory
+// Server files in the current directory
 func main() {
 	notfound := template.Must(template.New("404").Parse(`<!DOCTYPE html><html><body><h1>[404]</h1></body></html>`))
 
-	http.ListenAndServe(":8080", fileserver.New(filepath.Dir(os.Args[0]), func(fs *fileserver.Server) {
+	http.ListenAndServe(":8080", fileserver.New(".", func(fs *fileserver.Server) {
 		fs.ErrorHandler(0, func(w http.ResponseWriter, r *http.Request, code int) {
 			w.Header().Set("Content-Type", "text/html; charset=utf-8")
 			w.WriteHeader(code)
