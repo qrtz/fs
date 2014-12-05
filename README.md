@@ -27,7 +27,7 @@ func (f *FileServer) StripPrefix(prefix string)
 /// FileServer returns a handler that serves HTTP requests
 // with the contents of the directory rooted at root
 // calling each option on the server before returning it
-unc New(root string, options ...func(*FileServer)) http.Handler 
+func New(root string, options ...func(*FileServer)) http.Handler 
 ```
 
 Usage
