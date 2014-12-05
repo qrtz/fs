@@ -30,6 +30,9 @@ func (f *FileServer) StripPrefix(prefix string)
 func New(root string, options ...func(*FileServer)) http.Handler 
 ```
 
+Usage
+=====
+``` go
 package main
 
 import (
