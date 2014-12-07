@@ -58,11 +58,23 @@ func main() {
 	notfound := template.Must(template.New("404").Parse(`<!DOCTYPE html><html><head><title>[404]</title></head><body><h1>[404]</h1></body></html>`))
 
 	http.ListenAndServe(*addr, fs.New(*root, func(f *fs.FileServer) {
+		// Set the default error handler
 		f.ErrorHandler(0, func(w http.ResponseWriter, r *http.Request, code int) {
+			// We can set the content type base on the request
 			w.Header().Set("Content-Type", "text/html; charset=utf-8")
+
+			// We control the error code to return
 			w.WriteHeader(code)
+
+			// We can now respond with our awesome error page.
 			notfound.Execute(w, nil)
 		})
+
+		// Turn directory listing on. This is off by default
+		f.AutoIndex(true)
+
+		// Overwrite the default index page with one or more possible choices
+		f.Index("index.html", "default.html", "index.txt")
 	}))
 }
 
