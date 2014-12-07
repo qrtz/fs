@@ -124,6 +124,20 @@ func (f *FileServer) StripPrefix(prefix string) {
 }
 
 func (f *FileServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	name := filepath.Base(r.URL.Path)
+	// Redirect to ../[index] to /. Similar to the behavior of http.FileServer
+	for _, index := range f.index {
+		if index == name {
+			path := filepath.Dir(r.URL.Path)
+			if q := r.URL.RawQuery; q != "" {
+				path += "?" + q
+			}
+			w.Header().Set("Location", path)
+			w.WriteHeader(http.StatusMovedPermanently)
+			return
+		}
+	}
+
 	f.handlerFunc(f, &ResponseWrapper{ResponseWriter: w}, r)
 }
 
