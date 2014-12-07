@@ -40,19 +40,24 @@ func New(root string, options ...func(*FileServer)) http.Handler
 Usage
 =====
 ``` go
-// Server files in the current directory
 package main
 
 import (
+	"flag"
 	"github.com/qrtz/fs"
 	"html/template"
 	"net/http"
 )
 
 func main() {
+	addr := flag.String("addr", ":8080", "Server HTTP address")
+	root := flag.String("r", ".", "Base directory path for static contents")
+
+	flag.Parse()
+
 	notfound := template.Must(template.New("404").Parse(`<!DOCTYPE html><html><head><title>[404]</title></head><body><h1>[404]</h1></body></html>`))
 
-	http.ListenAndServe(":8080", fs.New(".", func(f *fs.FileServer) {
+	http.ListenAndServe(*addr, fs.New(*root, func(f *fs.FileServer) {
 		f.ErrorHandler(0, func(w http.ResponseWriter, r *http.Request, code int) {
 			w.Header().Set("Content-Type", "text/html; charset=utf-8")
 			w.WriteHeader(code)
