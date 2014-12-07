@@ -3,6 +3,8 @@ fs
 
 Package fs is a simple wrapper for net/http.FileServer. Provides helper functions to configure the behavior of the server
 
+`go get -u github.com/qrtz/fs`
+
 Features
 ========
 * Set Custom Error Handlers
@@ -31,7 +33,7 @@ func (f *FileServer) StripPrefix(prefix string)
 ```
 
 ``` go
-/// FileServer returns a handler that serves HTTP requests
+// FileServer returns a handler that serves HTTP requests
 // with the contents of the directory rooted at root
 // calling each option on the server before returning it
 func New(root string, options ...func(*FileServer)) http.Handler 
